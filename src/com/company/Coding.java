@@ -9,18 +9,20 @@ public class Coding {
     public Coding() {
 
     }
-    public static void encryption (File file) throws IOException {
+
+    public static void encryption(File file) throws IOException {
         byte[] bytes = getBytesFromFile(file);
-        for (int i=0;i<bytes.length;i++) {
+        for (int i = 0; i < bytes.length; i++) {
             bytes[i]++;
         }
         FileOutputStream out = new FileOutputStream(file);
         out.write(bytes);
         out.close();
     }
-    public static void decryption (File file) throws IOException {
+
+    public static void decryption(File file) throws IOException {
         byte[] bytes = getBytesFromFile(file);
-        for (int i=0;i<bytes.length;i++) {
+        for (int i = 0; i < bytes.length; i++) {
             bytes[i]--;
         }
 
@@ -28,7 +30,8 @@ public class Coding {
         out.write(bytes);
         out.close();
     }
-    private static byte[] getBytesFromFile(File file) throws IOException {
+
+    public static byte[] getBytesFromFile(File file) throws IOException {
         InputStream is = new FileInputStream(file);
         long length = file.length();
         if (length > Integer.MAX_VALUE) {
