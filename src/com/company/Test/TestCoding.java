@@ -1,7 +1,8 @@
 package com.company.Test;
 
 import junit.framework.TestCase;
-import junit.textui.TestRunner;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -19,27 +20,27 @@ import static org.junit.Assert.assertTrue;
 @RunWith(BlockJUnit4ClassRunner.class)
 
 public class TestCoding extends TestCase {
-    @org.junit.Before
+    @Before
     public void setUp() throws Exception {
 
     }
 
-    @org.junit.After
+    @After
     public void tearDown() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testEncryption() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testDecryption() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testGetBytesFromFile() throws Exception {
 
     }
