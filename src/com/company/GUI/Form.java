@@ -7,8 +7,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+
 import com.company.Coding;
-import java.util.Locale;
+
 
 /**
  * Created by Pavel on 28.02.2015.
@@ -31,7 +32,8 @@ public class Form {
     private JPanel panelDec;
     private JPanel panelStart;
     private JPanel panelChoose;
-    private void panelStartInit () {
+
+    private void panelStartInit() {
         panelStart = new JPanel();
         Button buttonStart = new Button("Выберите файл");
         buttonStart.addActionListener(new ActionListener() {
@@ -80,7 +82,7 @@ public class Form {
 
     }
 
-    private void panelEncInit () {
+    private void panelEncInit() {
         panelEnc = new JPanel();
         final JLabel label = new JLabel("Введите пароль для шифрования");
         final JPasswordField pass1 = new JPasswordField(10);
@@ -91,16 +93,14 @@ public class Form {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(Arrays.equals(pass1.getPassword(),pass2.getPassword()))
-                {
+                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
                     label.setText("Good");
                     try {
                         Coding.encryption(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else
+                } else
                     label.setText("Bad");
             }
         });
@@ -110,7 +110,7 @@ public class Form {
         panelEnc.add(start);
     }
 
-    private void panelDecInit () {
+    private void panelDecInit() {
         panelDec = new JPanel();
         final JLabel label = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(10);
@@ -121,16 +121,14 @@ public class Form {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(Arrays.equals(pass1.getPassword(),pass2.getPassword()))
-                {
+                if (equals1(pass1.getPassword(), pass2.getPassword())) {
                     label.setText("Good");
                     try {
                         Coding.decryption(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else
+                } else
                     label.setText("Bad");
             }
         });
@@ -138,5 +136,13 @@ public class Form {
         panelDec.add(pass1);
         panelDec.add(pass2);
         panelDec.add(start);
+    }
+    public boolean equals1(char[] ch1, char[] ch2) {
+        if (ch1.length!=ch2.length)
+            return false;
+        for (int i=0;i<ch1.length;i++)
+            if (ch1[i]!=ch2[i])
+                return false;
+        return true;
     }
 }
