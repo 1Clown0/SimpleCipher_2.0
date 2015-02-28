@@ -137,11 +137,12 @@ public class Form {
         panelDec.add(pass2);
         panelDec.add(start);
     }
+
     public boolean equals1(char[] ch1, char[] ch2) {
-        if (ch1.length!=ch2.length)
+        if (ch1.length != ch2.length)
             return false;
-        for (int i=0;i<ch1.length;i++)
-            if (ch1[i]!=ch2[i])
+        for (int i = 0; i < ch1.length; i++)
+            if (ch1[i] != ch2[i])
                 return false;
         return true;
     }
