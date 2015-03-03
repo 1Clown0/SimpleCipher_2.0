@@ -121,7 +121,7 @@ public class Form {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (equals1(pass1.getPassword(), pass2.getPassword())) {
+                if (equalsPass(pass1.getPassword(), pass2.getPassword())) {
                     label.setText("Good");
                     try {
                         Coding.decryption(file);
@@ -137,11 +137,12 @@ public class Form {
         panelDec.add(pass2);
         panelDec.add(start);
     }
-    public boolean equals1(char[] ch1, char[] ch2) {
-        if (ch1.length!=ch2.length)
+
+    public boolean equalsPass(char[] ch1, char[] ch2) {
+        if (ch1.length != ch2.length)
             return false;
-        for (int i=0;i<ch1.length;i++)
-            if (ch1[i]!=ch2[i])
+        for (int i = 0; i < ch1.length; i++)
+            if (ch1[i] != ch2[i])
                 return false;
         return true;
     }

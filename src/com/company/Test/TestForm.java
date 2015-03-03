@@ -1,5 +1,6 @@
 package com.company.Test;
 
+import com.company.GUI.Form;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -13,13 +14,13 @@ import static org.junit.Assert.assertTrue;
  * Created with IntelliJ IDEA.
  * User: Администратор
  * Date: 28.02.15
- * Time: 17:13
+ * Time: 19:07
  * To change this template use File | Settings | File Templates.
  */
 
 @RunWith(BlockJUnit4ClassRunner.class)
 
-public class TestCoding extends TestCase {
+public class TestForm extends TestCase {
     @Before
     public void setUp() throws Exception {
 
@@ -31,17 +32,8 @@ public class TestCoding extends TestCase {
     }
 
     @Test
-    public void testEncryption() throws Exception {
-
-    }
-
-    @Test
-    public void testDecryption() throws Exception {
-
-    }
-
-    @Test
-    public void testGetBytesFromFile() throws Exception {
-
+    public void testEqualsPass() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
     }
 }
