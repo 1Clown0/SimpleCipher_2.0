@@ -15,7 +15,7 @@ public class Coding {
         for (int i = 0; i < bytes.length; i++) {
             bytes[i]++;
         }
-        File newFile = new File(file.getParent(),createFileName(file.getName(), "encrypted"));
+        File newFile = new File(file.getParent(), createFileName(file.getName(), "encrypted"));
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
         out.write(bytes);
@@ -27,7 +27,7 @@ public class Coding {
         for (int i = 0; i < bytes.length; i++) {
             bytes[i]--;
         }
-        File newFile = new File(file.getParent(),createFileName(file.getName(),"decrypted"));
+        File newFile = new File(file.getParent(), createFileName(file.getName(), "decrypted"));
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
         out.write(bytes);
@@ -62,15 +62,27 @@ public class Coding {
 
     public static String createFileName(String fileName, String mode) {
         int n;
-        for (n=0;n<fileName.length() && fileName.charAt(n)!='.';n++);
+        for (n = 0; n < fileName.length() && fileName.charAt(n) != '.'; n++) ;
         char[] filename1 = new char[n];
-        for (int i=0;i<n;i++)
+        for (int i = 0; i < n; i++)
             filename1[i] = fileName.charAt(i);
         String firstPart = new String(filename1);
-        char[] filename2 = new char[fileName.length()-n-1];
-        for (int i=n+1;i<fileName.length();i++)
-            filename2[i-n-1] = fileName.charAt(i);
+        char[] filename2 = new char[fileName.length() - n - 1];
+        for (int i = n + 1; i < fileName.length(); i++)
+            filename2[i - n - 1] = fileName.charAt(i);
         String secondPart = new String(filename2);
-        return firstPart + "(" + mode + ")" + "."+secondPart;
+        return firstPart + "(" + mode + ")" + "." + secondPart;
+    }
+
+    static public boolean checkName(File file) {
+        int n;
+        for (n = 0; n < file.getName().length() && file.getName().charAt(n) != '.'; n++) ;
+        char[] buf = new char[file.getName().length() - n-1];
+        file.getName().getChars(n+1, file.getName().length(), buf, 0);
+        String tmp = new String(buf);
+        if (tmp.equals("cipher")) {
+            return true;
+        } else
+            return false;
     }
 }
