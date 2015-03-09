@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,121 +23,143 @@ public class Form {
         frame.setSize(500, 300);
         frame.setLocation(100, 100);
         frame.setVisible(true);
+        //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
+        //DragAndDrop dad = new DragAndDrop(label);
+        fileLabel = new JLabel();
         panelStartInit();
+        //panelEncInit();
+        //panelDecInit();
         frame.add(panelStart);
+        frame.validate();
     }
 
 
-    private File file;
+    public static File file;
+    //private File file1;
     private JFrame frame;
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
     private JPanel panelChoose;
+    public JLabel fileLabel;
+
 
     private void panelStartInit() {
+        file = new File("newFile");
         panelStart = new JPanel();
-        Button buttonStart = new Button("Выберите файл");
-        buttonStart.addActionListener(new ActionListener() {
+        final JLabel label = new JLabel("Drop stuff here");;
+        JButton check = new JButton("Проверить");
+        check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileopen = new JFileChooser();
-                int ret = fileopen.showDialog(null, "Выберите файл");
-                if (ret == JFileChooser.APPROVE_OPTION) {
-                    file = fileopen.getSelectedFile();
-                    panelChooseInit();
-                    frame.remove(panelStart);
-                    frame.add(panelChoose);
-                    frame.validate();
+                if (label.getText() != "Drop stuff here") {
+                    if (!Coding.checkName(file)) {
+                        panelEncInit(label);
+                        frame.remove(panelStart);
+                        frame.add(panelEnc,BorderLayout.CENTER );
+                        frame.validate();
+                    }
+                    else
+                    {
+                        frame.remove(panelStart);
+                        panelDecInit(label);
+                        frame.add(panelDec,BorderLayout.CENTER );
+                        frame.validate();
+                    }
                 }
             }
         });
-        panelStart.add(buttonStart);
+        panelStart.add(check);
+        panelStart.add(label);
+        panelStart.setTransferHandler(new DragAndDrop(label));
+        panelStart.add(label);
     }
 
-    private void panelChooseInit() {
-        panelChoose = new JPanel();
-        JLabel label = new JLabel(file.getName());
-        Button buttonEnc = new Button("Зашивровать файл");
-        Button buttonDec = new Button("Расшивровать файл");
-        buttonEnc.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                panelEncInit();
-                frame.remove(panelChoose);
-                frame.add(panelEnc);
-                frame.validate();
-            }
-        });
-        buttonDec.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                panelDecInit();
-                frame.remove(panelChoose);
-                frame.add(panelDec);
-                frame.validate();
-            }
-        });
-        panelChoose.add(label);
-        panelChoose.add(buttonEnc);
-        panelChoose.add(buttonDec);
 
-    }
-
-    private void panelEncInit() {
+    private void panelEncInit(JLabel l) {
         panelEnc = new JPanel();
-        final JLabel label = new JLabel("Введите пароль для шифрования");
-        final JPasswordField pass1 = new JPasswordField(10);
-        pass1.setToolTipText("Введите пароль");
-        final JPasswordField pass2 = new JPasswordField(10);
-        pass2.setToolTipText("Повторите пароль");
-        JButton start = new JButton("пуск");
+        JLabel lab = new JLabel(l.getText());
+        final JLabel label1 = new JLabel("Введите пароль");
+        final JPasswordField pass1 = new JPasswordField(15);
+        final JLabel label2 = new JLabel("Подтвердите пароль");
+        final JPasswordField pass2 = new JPasswordField(15);
+        JButton back = new JButton("Назад");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.remove(panelEnc);
+                frame.add(panelStart);
+                frame.validate();}
+        });
+        JButton start = new JButton("Пуск");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
-                    label.setText("Good");
+
+                    label1.setText("Good");
                     try {
                         Coding.encryption(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else
-                    label.setText("Bad");
+                }
             }
         });
-        panelEnc.add(label);
-        panelEnc.add(pass1);
-        panelEnc.add(pass2);
-        panelEnc.add(start);
+        panelEnc.add(lab,BorderLayout.NORTH);
+        Container c = new Container();
+        c.setLayout(new GridLayout(2,2));
+        c.add(label1);
+        c.add(pass1);
+        c.add(label2);
+        c.add(pass2);
+
+        panelEnc.add(c,BorderLayout.CENTER);
+        panelEnc.add(start,BorderLayout.SOUTH);
+        panelEnc.add(back,BorderLayout.SOUTH);
     }
 
-    private void panelDecInit() {
+    private void panelDecInit(JLabel l) {
         panelDec = new JPanel();
-        final JLabel label = new JLabel("Введите пароль");
+        JLabel lab = new JLabel(l.getText());
+        final JLabel label1 = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(10);
-        pass1.setToolTipText("Введите пароль");
+        final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(10);
-        pass2.setToolTipText("Повторите пароль");
-        JButton start = new JButton("пуск");
+        JButton back = new JButton("Назад");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.remove(panelDec);
+                frame.add(panelStart);
+                frame.validate();
+            }
+        });
+        JButton start = new JButton("Пуск");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (equalsPass(pass1.getPassword(), pass2.getPassword())) {
-                    label.setText("Good");
+                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
+                    label1.setText("Good");
                     try {
                         Coding.decryption(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else
-                    label.setText("Bad");
+                }
             }
         });
-        panelDec.add(label);
-        panelDec.add(pass1);
-        panelDec.add(pass2);
-        panelDec.add(start);
+        panelDec.add(lab,BorderLayout.NORTH);
+        Container c = new Container();
+        c.setLayout(new GridLayout(2,2));
+        c.add(label1);
+        c.add(pass1);
+        c.add(label2);
+        c.add(pass2);
+
+        panelDec.add(c,BorderLayout.CENTER);
+        panelDec.add(start,BorderLayout.SOUTH);
+        panelDec.add(back,BorderLayout.SOUTH);
     }
 
     public boolean equalsPass(char[] ch1, char[] ch2) {
