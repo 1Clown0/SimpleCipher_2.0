@@ -25,7 +25,6 @@ public class Form {
         frame.setVisible(true);
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
         //DragAndDrop dad = new DragAndDrop(label);
-        fileLabel = new JLabel();
         panelStartInit();
         //panelEncInit();
         //panelDecInit();
