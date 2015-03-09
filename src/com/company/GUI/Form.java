@@ -40,8 +40,7 @@ public class Form {
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
-    private JPanel panelChoose;
-    public JLabel fileLabel;
+
 
 
     private void panelStartInit() {
