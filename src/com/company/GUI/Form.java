@@ -54,7 +54,7 @@ public class Form {
                     if (!Coding.checkName(file)) {
                         panelEncInit(label);
                         frame.remove(panelStart);
-                        frame.add(panelEnc,BorderLayout.CENTER );
+                        frame.add(panelEnc, BorderLayout.CENTER);
                         frame.validate();
                     }
                     else
@@ -87,7 +87,8 @@ public class Form {
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.remove(panelEnc);
                 frame.add(panelStart);
-                frame.validate();}
+                frame.repaint();
+            }
         });
         JButton start = new JButton("Пуск");
         start.addActionListener(new ActionListener() {
@@ -130,7 +131,7 @@ public class Form {
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.remove(panelDec);
                 frame.add(panelStart);
-                frame.validate();
+                frame.repaint();
             }
         });
         JButton start = new JButton("Пуск");
