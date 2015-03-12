@@ -2,13 +2,10 @@ package com.company.Test;
 
 import com.company.GUI.Form;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,18 +18,46 @@ import static org.junit.Assert.assertTrue;
 @RunWith(BlockJUnit4ClassRunner.class)
 
 public class TestForm extends TestCase {
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
 
     @Test
     public void testEqualsPass() throws Exception {
         Form form = new Form();
         assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
+    }
+
+    @Test
+    public void testNotEqualsPass() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'y', 'z'}) == false);
+    }
+
+    @Test
+    public void testNotEqualsPassFirstItem() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'b', 'c'}) == false);
+    }
+
+    @Test
+    public void testNotEqualsPassSecondItem() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'x', 'c'}) == false);
+    }
+
+    @Test
+    public void testNotEqualsPassLastItem() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'x'}) == false);
+    }
+
+    @Test
+    public void testNotEqualsPassLowercase() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'A', 'B', 'C'}) == false);
+    }
+
+    @Test
+    public void testNotEqualsPassUppercase() throws Exception {
+        Form form = new Form();
+        assertTrue(form.equalsPass(new char[]{'A', 'B', 'C'}, new char[]{'a', 'b', 'c'}) == false);
     }
 }
