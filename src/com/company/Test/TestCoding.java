@@ -1,13 +1,12 @@
 package com.company.Test;
 
+import com.company.Coding;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
-import static org.junit.Assert.assertTrue;
+import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,28 +19,31 @@ import static org.junit.Assert.assertTrue;
 @RunWith(BlockJUnit4ClassRunner.class)
 
 public class TestCoding extends TestCase {
-    @Before
-    public void setUp() throws Exception {
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
+    @Test
+    public void testOkCheckName() throws Exception {
+        Coding coding = new Coding();
+        File newFile = new File("test.cipher");
+        assertTrue(coding.checkName(newFile) == true);
     }
 
     @Test
-    public void testEncryption() throws Exception {
-
+    public void testFailCheckName() throws Exception {
+        Coding coding = new Coding();
+        File newFile = new File("test.txt");
+        assertTrue(coding.checkName(newFile) == false);
     }
 
     @Test
-    public void testDecryption() throws Exception {
-
+    public void testCreateFileName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).txt") == true);
     }
 
     @Test
-    public void testGetBytesFromFile() throws Exception {
-
+    public void testNotCreateFileName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test") == false);
     }
+
 }
