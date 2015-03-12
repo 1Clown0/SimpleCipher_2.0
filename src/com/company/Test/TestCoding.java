@@ -35,15 +35,57 @@ public class TestCoding extends TestCase {
     }
 
     @Test
-    public void testCreateFileName() throws Exception {
+    public void testCreateFileFullName() throws Exception {
         Coding coding = new Coding();
         assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).txt") == true);
     }
 
     @Test
+    public void testNotCreateFileFullName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("") == false);
+    }
+
+    @Test
     public void testNotCreateFileName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test") == false);
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("(decrypted).txt") == false);
+    }
+
+    @Test
+    public void testNotCreateFileMode() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test().txt") == false);
+    }
+
+    @Test
+    public void testNotCreateFileExtension() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).") == false);
+    }
+
+    @Test
+    public void testCreateInvalidFileName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("xxx(decrypted).txt") == false);
+    }
+
+    @Test
+    public void testCreateInvalidFileMode() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(xxx).txt") == false);
+    }
+
+    @Test
+    public void testCreateInvalidFileExtension() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).xxx") == false);
+    }
+
+    @Test
+    public void testCreateFileFullNameWithoutDot() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted)txt") == false);
     }
 
 }
