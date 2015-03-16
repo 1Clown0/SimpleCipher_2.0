@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.company.AesException;
 import com.company.Coding;
 
 
@@ -89,8 +90,10 @@ public class Form implements Observer{
 
                     label1.setText("Good");
                     try {
-                        Coding.writeZip(file);
+                        Coding.encryption(file);
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (AesException e) {
                         e.printStackTrace();
                     }
                 }
@@ -136,6 +139,8 @@ public class Form implements Observer{
                     try {
                         Coding.decryption(file);
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (AesException e) {
                         e.printStackTrace();
                     }
                 }

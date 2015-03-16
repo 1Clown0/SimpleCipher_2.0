@@ -12,11 +12,12 @@ public class Coding {
 
     }
 
-    public static void encryption(File file) throws IOException {
+    public static void encryption(File file) throws IOException, AesException {
         byte[] bytes = getBytesFromFile(file);
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i]++;
-        }
+        //for (int i = 0; i < bytes.length; i++) {
+        //    bytes[i]++;
+        //}
+
         byte[] mark = new byte[10];
         for (int i=0;i<mark.length;i++)
             mark[i]=-128;
@@ -25,18 +26,10 @@ public class Coding {
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
         out.write(mark);
-        out.write(bytes);
+        //out.write((new AesCrypt("123")).encrypt(bytes));
         out.close();
     }
-     public static void writeZip(File file) throws IOException {
-         byte[] bytes = getBytesFromFile(file);
-         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(file.getParent()+"/123.zip"));
-         ZipEntry entry = new ZipEntry(file.getPath());
-         zos.putNextEntry(entry);
-         zos.write(bytes);
-         zos.close();
-     }
-    public static void decryption(File file) throws IOException {
+    public static void decryption(File file) throws IOException, AesException {
         byte[] bytes = getBytesFromFile(file);
         byte[] forWrite = new byte[bytes.length-10];
         for (int i = 0; i < forWrite.length; i++) {
@@ -47,7 +40,7 @@ public class Coding {
         File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
-        out.write(forWrite);
+        //out.write((new AesCrypt("123").decrypt(forWrite)));
         out.close();
     }
 
@@ -116,7 +109,7 @@ public class Coding {
         boolean flag = true;
         if (bytes.length<=10)
             return false;
-        for (int i=0;i<bytes.length;i++)
+        for (int i=0;i<10;i++)
             if (bytes[i]!=-128)
                 flag = false;
         return flag;
