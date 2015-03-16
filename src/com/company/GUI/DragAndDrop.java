@@ -14,12 +14,13 @@ import java.util.List;
 public class DragAndDrop extends TransferHandler {
 
     public JLabel label;
+    LabelObserver l;
 
-
-    public DragAndDrop(JLabel label)
+    public DragAndDrop(JLabel label, LabelObserver l)
     {
         super();
         this.label = label;
+        this.l = l;
 
     }
     public boolean canImport(TransferSupport support) {
@@ -50,7 +51,13 @@ public class DragAndDrop extends TransferHandler {
                 else
                     label.setText("<html>" + files.size() +
                             " files dropped<br>" + sb);
-                Form.file=files.get(0);
+                if (files.get(0).isFile()) {
+                    Form.file = files.get(0);
+                    l.labelChanged(label);
+
+                }
+                else
+                    label.setText("<html>It isn' file<br>");
             }
             else if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 

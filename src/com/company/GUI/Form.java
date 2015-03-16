@@ -9,6 +9,8 @@ import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.company.Coding;
 
@@ -16,7 +18,7 @@ import com.company.Coding;
 /**
  * Created by Pavel on 28.02.2015.
  */
-public class Form {
+public class Form implements Observer{
     public Form() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -26,10 +28,12 @@ public class Form {
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
         //DragAndDrop dad = new DragAndDrop(label);
         panelStartInit();
+
         //panelEncInit();
         //panelDecInit();
         frame.add(panelStart);
         frame.validate();
+
     }
 
 
@@ -45,37 +49,19 @@ public class Form {
     private void panelStartInit() {
         file = new File("newFile");
         panelStart = new JPanel();
+        panelStart.setBackground(Color.white);
+        LabelObserver l = new LabelObserver();
+        l.addObserver(this);
         final JLabel label = new JLabel("Drop stuff here");;
-        JButton check = new JButton("Проверить");
-        check.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (label.getText() != "Drop stuff here") {
-                    if (!Coding.checkName(file)) {
-                        panelEncInit(label);
-                        frame.remove(panelStart);
-                        frame.add(panelEnc, BorderLayout.CENTER);
-                        frame.validate();
-                    }
-                    else
-                    {
-                        frame.remove(panelStart);
-                        panelDecInit(label);
-                        frame.add(panelDec,BorderLayout.CENTER );
-                        frame.validate();
-                    }
-                }
-            }
-        });
-        panelStart.add(check);
         panelStart.add(label);
-        panelStart.setTransferHandler(new DragAndDrop(label));
+        panelStart.setTransferHandler(new DragAndDrop(label,l));
         panelStart.add(label);
     }
 
 
-    private void panelEncInit(JLabel l) {
+    private void panelEncInit(final JLabel l) {
         panelEnc = new JPanel();
+        panelEnc.setBackground(Color.white);
         JLabel lab = new JLabel(l.getText());
         final JLabel label1 = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(15);
@@ -85,6 +71,7 @@ public class Form {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                l.setText("Drop stuff here");
                 frame.remove(panelEnc);
                 frame.add(panelStart);
                 frame.repaint();
@@ -98,7 +85,7 @@ public class Form {
 
                     label1.setText("Good");
                     try {
-                        Coding.encryption(file);
+                        Coding.writeZip(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -118,8 +105,9 @@ public class Form {
         panelEnc.add(back,BorderLayout.SOUTH);
     }
 
-    private void panelDecInit(JLabel l) {
+    private void panelDecInit(final JLabel l) {
         panelDec = new JPanel();
+        panelDec.setBackground(Color.white);
         JLabel lab = new JLabel(l.getText());
         final JLabel label1 = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(10);
@@ -129,6 +117,7 @@ public class Form {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                l.setText("Drop stuff here");
                 frame.remove(panelDec);
                 frame.add(panelStart);
                 frame.repaint();
@@ -168,5 +157,27 @@ public class Form {
             if (ch1[i] != ch2[i])
                 return false;
         return true;
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+        if (((LabelObserver)o).getLabel().getText() != "Drop stuff here") {
+            try {
+                if (!Coding.checkFile(file)) {
+                    panelEncInit(((LabelObserver)o).getLabel());
+                    frame.remove(panelStart);
+                    frame.add(panelEnc, BorderLayout.CENTER);
+                    frame.validate();
+                }
+                else
+                {
+                    frame.remove(panelStart);
+                    panelDecInit(((LabelObserver)o).getLabel());
+                    frame.add(panelDec,BorderLayout.CENTER );
+                    frame.validate();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

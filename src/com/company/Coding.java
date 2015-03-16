@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by Pavel on 28.02.2015.
@@ -15,22 +17,37 @@ public class Coding {
         for (int i = 0; i < bytes.length; i++) {
             bytes[i]++;
         }
-        File newFile = new File(file.getParent(), createFileName(file.getName(), "encrypted"));
+        byte[] mark = new byte[10];
+        for (int i=0;i<mark.length;i++)
+            mark[i]=-128;
+        String tmp = createFileName(file.getName(), "encrypted") + "." + "cipher";
+        File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
+        out.write(mark);
         out.write(bytes);
         out.close();
     }
-
+     public static void writeZip(File file) throws IOException {
+         byte[] bytes = getBytesFromFile(file);
+         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(file.getParent()+"/123.zip"));
+         ZipEntry entry = new ZipEntry(file.getPath());
+         zos.putNextEntry(entry);
+         zos.write(bytes);
+         zos.close();
+     }
     public static void decryption(File file) throws IOException {
         byte[] bytes = getBytesFromFile(file);
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i]--;
+        byte[] forWrite = new byte[bytes.length-10];
+        for (int i = 0; i < forWrite.length; i++) {
+            bytes[i+10]--;
+            forWrite[i]=bytes[i+10];
         }
-        File newFile = new File(file.getParent(), createFileName(file.getName(), "decrypted"));
+        String tmp = createFileName(file.getName(), "decrypted") + "." + "docx";
+        File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
-        out.write(bytes);
+        out.write(forWrite);
         out.close();
     }
 
@@ -67,11 +84,7 @@ public class Coding {
         for (int i = 0; i < n; i++)
             filename1[i] = fileName.charAt(i);
         String firstPart = new String(filename1);
-        char[] filename2 = new char[fileName.length() - n - 1];
-        for (int i = n + 1; i < fileName.length(); i++)
-            filename2[i - n - 1] = fileName.charAt(i);
-        String secondPart = new String(filename2);
-        return firstPart + "(" + mode + ")" + "." + secondPart;
+        return firstPart + "(" + mode + ")";
     }
 
     static public boolean checkName(File file) {
@@ -84,5 +97,26 @@ public class Coding {
             return true;
         } else
             return false;
+    }
+
+    static public boolean checkFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+        byte[] bytes = new byte[10];
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+            offset += numRead;
+        }
+
+        // Ensure all the bytes have been read in
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file " + file.getName());
+        }
+        boolean flag = true;
+        for (int i=0;i<bytes.length;i++)
+            if (bytes[i]!=-128)
+                flag = false;
+        return flag;
+
     }
 }
