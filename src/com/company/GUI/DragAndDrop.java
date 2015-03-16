@@ -48,16 +48,17 @@ public class DragAndDrop extends TransferHandler {
                     sb.append("<li>" + file);
                 if (files.size()>1)
                     label.setText("<html> Too mane files");
-                else
+                else {
                     label.setText("<html>" + files.size() +
                             " files dropped<br>" + sb);
-                if (files.get(0).isFile()) {
-                    Form.file = files.get(0);
-                    l.labelChanged(label);
 
+                    if (files.get(0).isFile()) {
+                        Form.file = files.get(0);
+                        l.labelChanged(label);
+
+                    } else
+                        label.setText("<html>It isn' file<br>");
                 }
-                else
-                    label.setText("<html>It isn' file<br>");
             }
             else if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 

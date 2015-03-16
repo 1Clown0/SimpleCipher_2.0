@@ -22,7 +22,7 @@ public class Form implements Observer{
     public Form() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(600,400);
         frame.setLocation(100, 100);
         frame.setVisible(true);
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
@@ -43,16 +43,20 @@ public class Form implements Observer{
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
-
+    private Image image;
 
 
     private void panelStartInit() {
         file = new File("newFile");
         panelStart = new JPanel();
+        JLabel background=new JLabel(new ImageIcon(Form.class.getResource("w2qV7qCs7eo.jpg")));
+        panelStart.add(background);
+        background.setLayout(new FlowLayout());
+
         panelStart.setBackground(Color.white);
         LabelObserver l = new LabelObserver();
         l.addObserver(this);
-        final JLabel label = new JLabel("Drop stuff here");;
+        final JLabel label = new JLabel("Ты чё такой дерзкий? Файлы есть?");;
         panelStart.add(label);
         panelStart.setTransferHandler(new DragAndDrop(label,l));
         panelStart.add(label);

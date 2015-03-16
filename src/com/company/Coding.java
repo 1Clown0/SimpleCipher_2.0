@@ -101,10 +101,11 @@ public class Coding {
 
     static public boolean checkFile(File file) throws IOException {
         InputStream is = new FileInputStream(file);
-        byte[] bytes = new byte[10];
+        byte[] bytes = new byte[(int) file.length()];
+        long length=file.length();
         int offset = 0;
         int numRead = 0;
-        while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+        while (offset < bytes.length && offset<length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
             offset += numRead;
         }
 
@@ -113,6 +114,8 @@ public class Coding {
             throw new IOException("Could not completely read file " + file.getName());
         }
         boolean flag = true;
+        if (bytes.length<=10)
+            return false;
         for (int i=0;i<bytes.length;i++)
             if (bytes[i]!=-128)
                 flag = false;
