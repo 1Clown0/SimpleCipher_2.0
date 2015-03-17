@@ -1,6 +1,11 @@
 package com.company;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -12,11 +17,11 @@ public class Coding {
 
     }
 
-    public static void encryption(File file) throws IOException, AesException {
+    public static void encryption(File file) throws IOException{
         byte[] bytes = getBytesFromFile(file);
-        //for (int i = 0; i < bytes.length; i++) {
-        //    bytes[i]++;
-        //}
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i]++;
+        }
 
         byte[] mark = new byte[10];
         for (int i=0;i<mark.length;i++)
@@ -26,21 +31,21 @@ public class Coding {
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
         out.write(mark);
-        //out.write((new AesCrypt("123")).encrypt(bytes));
+        out.write(bytes);
         out.close();
     }
-    public static void decryption(File file) throws IOException, AesException {
+    public static void decryption(File file) throws IOException {
         byte[] bytes = getBytesFromFile(file);
         byte[] forWrite = new byte[bytes.length-10];
         for (int i = 0; i < forWrite.length; i++) {
             bytes[i+10]--;
             forWrite[i]=bytes[i+10];
         }
-        String tmp = createFileName(file.getName(), "decrypted") + "." + "docx";
+        String tmp = createFileName(file.getName(), "decrypted") + "." + "txt";
         File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
-        //out.write((new AesCrypt("123").decrypt(forWrite)));
+        out.write(forWrite);
         out.close();
     }
 

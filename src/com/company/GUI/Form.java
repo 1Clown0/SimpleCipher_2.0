@@ -1,5 +1,8 @@
 package com.company.GUI;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,11 +11,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.company.AesException;
 import com.company.Coding;
 
 
@@ -44,20 +48,19 @@ public class Form implements Observer{
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
-    private Image image;
 
 
     private void panelStartInit() {
         file = new File("newFile");
         panelStart = new JPanel();
-        JLabel background=new JLabel(new ImageIcon(Form.class.getResource("w2qV7qCs7eo.jpg")));
-        panelStart.add(background);
-        background.setLayout(new FlowLayout());
+        //JLabel background=new JLabel(new ImageIcon(Form.class.getResource("w2qV7qCs7eo.jpg")));
+        //panelStart.add(background);
+        //background.setLayout(new FlowLayout());
 
         panelStart.setBackground(Color.white);
         LabelObserver l = new LabelObserver();
         l.addObserver(this);
-        final JLabel label = new JLabel("Ты чё такой дерзкий? Файлы есть?");;
+        final JLabel label = new JLabel("Drop stuff here");;
         panelStart.add(label);
         panelStart.setTransferHandler(new DragAndDrop(label,l));
         panelStart.add(label);
@@ -92,8 +95,6 @@ public class Form implements Observer{
                     try {
                         Coding.encryption(file);
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (AesException e) {
                         e.printStackTrace();
                     }
                 }
@@ -139,8 +140,6 @@ public class Form implements Observer{
                     try {
                         Coding.decryption(file);
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (AesException e) {
                         e.printStackTrace();
                     }
                 }
