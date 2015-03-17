@@ -23,11 +23,11 @@ import com.company.Coding;
 /**
  * Created by Pavel on 28.02.2015.
  */
-public class Form implements Observer{
+public class Form implements Observer {
     public Form() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setSize(600,400);
+        frame.setSize(600, 400);
         frame.setLocation(100, 100);
         frame.setVisible(true);
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
@@ -38,9 +38,7 @@ public class Form implements Observer{
         //panelDecInit();
         frame.add(panelStart);
         frame.validate();
-
     }
-
 
     public static File file;
     //private File file1;
@@ -48,7 +46,6 @@ public class Form implements Observer{
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
-
 
     private void panelStartInit() {
         file = new File("newFile");
@@ -60,9 +57,9 @@ public class Form implements Observer{
         panelStart.setBackground(Color.white);
         LabelObserver l = new LabelObserver();
         l.addObserver(this);
-        final JLabel label = new JLabel("Drop stuff here");;
+        final JLabel label = new JLabel("Drop stuff here");
         panelStart.add(label);
-        panelStart.setTransferHandler(new DragAndDrop(label,l));
+        panelStart.setTransferHandler(new DragAndDrop(label, l));
         panelStart.add(label);
     }
 
@@ -100,17 +97,17 @@ public class Form implements Observer{
                 }
             }
         });
-        panelEnc.add(lab,BorderLayout.NORTH);
+        panelEnc.add(lab, BorderLayout.NORTH);
         Container c = new Container();
-        c.setLayout(new GridLayout(2,2));
+        c.setLayout(new GridLayout(2, 2));
         c.add(label1);
         c.add(pass1);
         c.add(label2);
         c.add(pass2);
 
-        panelEnc.add(c,BorderLayout.CENTER);
-        panelEnc.add(start,BorderLayout.SOUTH);
-        panelEnc.add(back,BorderLayout.SOUTH);
+        panelEnc.add(c, BorderLayout.CENTER);
+        panelEnc.add(start, BorderLayout.SOUTH);
+        panelEnc.add(back, BorderLayout.SOUTH);
     }
 
     private void panelDecInit(final JLabel l) {
@@ -145,17 +142,17 @@ public class Form implements Observer{
                 }
             }
         });
-        panelDec.add(lab,BorderLayout.NORTH);
+        panelDec.add(lab, BorderLayout.NORTH);
         Container c = new Container();
-        c.setLayout(new GridLayout(2,2));
+        c.setLayout(new GridLayout(2, 2));
         c.add(label1);
         c.add(pass1);
         c.add(label2);
         c.add(pass2);
 
-        panelDec.add(c,BorderLayout.CENTER);
-        panelDec.add(start,BorderLayout.SOUTH);
-        panelDec.add(back,BorderLayout.SOUTH);
+        panelDec.add(c, BorderLayout.CENTER);
+        panelDec.add(start, BorderLayout.SOUTH);
+        panelDec.add(back, BorderLayout.SOUTH);
     }
 
     public boolean equalsPass(char[] ch1, char[] ch2) {
@@ -166,21 +163,20 @@ public class Form implements Observer{
                 return false;
         return true;
     }
+
     @Override
     public void update(Observable o, Object arg) {
-        if (((LabelObserver)o).getLabel().getText() != "Drop stuff here") {
+        if (((LabelObserver) o).getLabel().getText() != "Drop stuff here") {
             try {
                 if (!Coding.checkFile(file)) {
-                    panelEncInit(((LabelObserver)o).getLabel());
+                    panelEncInit(((LabelObserver) o).getLabel());
                     frame.remove(panelStart);
                     frame.add(panelEnc, BorderLayout.CENTER);
                     frame.validate();
-                }
-                else
-                {
+                } else {
                     frame.remove(panelStart);
-                    panelDecInit(((LabelObserver)o).getLabel());
-                    frame.add(panelDec,BorderLayout.CENTER );
+                    panelDecInit(((LabelObserver) o).getLabel());
+                    frame.add(panelDec, BorderLayout.CENTER);
                     frame.validate();
                 }
             } catch (IOException e) {
