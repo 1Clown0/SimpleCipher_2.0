@@ -90,18 +90,8 @@ public class Form implements Observer {
 
                     label1.setText("Good");
                     try {
-                        Coding.encryption(file, new String(pass1.getPassword()));
+                        Coding.encryption(file);
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
                 }
@@ -128,7 +118,6 @@ public class Form implements Observer {
         final JPasswordField pass1 = new JPasswordField(10);
         final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(10);
-        final JLabel labelError = new JLabel("");
         JButton back = new JButton("Назад");
         back.addActionListener(new ActionListener() {
             @Override
@@ -146,45 +135,24 @@ public class Form implements Observer {
                 if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
                     label1.setText("Good");
                     try {
-                        Coding.decryption(file, new String(pass1.getPassword()));
+                        Coding.decryption(file);
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                        labelError.setText("Не удалось расшифровать файл, неверный пароль");
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
-        Container c1 = new Container();
-        c1.setLayout(new GridLayout(2, 1));
-        c1.add(lab);
-        c1.add(labelError);
+        panelDec.add(lab, BorderLayout.NORTH);
+        Container c = new Container();
+        c.setLayout(new GridLayout(2, 2));
+        c.add(label1);
+        c.add(pass1);
+        c.add(label2);
+        c.add(pass2);
 
-        Container c2 = new Container();
-
-        c2.setLayout(new GridLayout(2, 2));
-        c2.add(label1);
-        c2.add(pass1);
-        c2.add(label2);
-        c2.add(pass2);
-
-        Container c3 = new Container();
-        c3.setLayout(new GridLayout(1,2));
-        c3.add(start);
-        c3.add(back);
-        panelDec.add(c1);
-        panelDec.add(c2);
-        panelDec.add(c3);
-
+        panelDec.add(c, BorderLayout.CENTER);
+        panelDec.add(start, BorderLayout.SOUTH);
+        panelDec.add(back, BorderLayout.SOUTH);
     }
 
     public boolean equalsPass(char[] ch1, char[] ch2) {
