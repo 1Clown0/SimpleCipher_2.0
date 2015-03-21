@@ -39,17 +39,6 @@
         </junit>
     </target>
 
-    <!--    <target name="run-test-report" depends="test">
-            <mkdir dir="TestReports" />
-            <junitreport todir="TestReports">
-                <fileset dir=".">
-                    <include name="*.xml" />
-                    <include name="*.txt" />
-                </fileset>
-                <report format="frames" todir="TestReports" />
-            </junitreport>
-        </target>-->
-
     <!-- Эта задача упаковывает программу в jar-архив -->
     <target name="dist" depends="test" description="Create jar-file">
         <jar jarfile="C:\Project\SimpleCipher 2.0\SimpleCipher.jar" basedir="${buildSrc}"

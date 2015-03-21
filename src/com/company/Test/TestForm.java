@@ -22,7 +22,7 @@ public class TestForm extends TestCase {
     @Test
     public void testEqualsPass() throws Exception {
         Form form = new Form();
-        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
+        assertTrue(!form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TestForm extends TestCase {
     @Test
     public void testNotEqualsPassLastItem() throws Exception {
         Form form = new Form();
-        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'x'}) == false);
+        assertTrue(!form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'x'}) == false);
     }
 
     @Test

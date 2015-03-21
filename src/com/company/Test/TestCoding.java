@@ -25,7 +25,7 @@ public class TestCoding extends TestCase {
     public void testOkCheckName() throws Exception {
         Coding coding = new Coding();
         File newFile = new File("test.cipher");
-        assertTrue(coding.checkName(newFile) == true);
+        assertTrue(!coding.checkName(newFile) == true);
     }
 
     @Test
