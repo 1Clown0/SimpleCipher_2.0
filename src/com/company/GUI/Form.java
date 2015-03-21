@@ -1,23 +1,16 @@
 package com.company.GUI;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import com.company.Coding;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-
-import com.company.Coding;
 
 
 /**
@@ -27,13 +20,12 @@ public class Form implements Observer {
     public Form() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(600, 200);
         frame.setLocation(100, 100);
         frame.setVisible(true);
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
         //DragAndDrop dad = new DragAndDrop(label);
         panelStartInit();
-
         //panelEncInit();
         //panelDecInit();
         frame.add(panelStart);
@@ -67,6 +59,7 @@ public class Form implements Observer {
     private void panelEncInit(final JLabel l) {
         panelEnc = new JPanel();
         panelEnc.setBackground(Color.white);
+        JLabel enc = new JLabel("Шифровка файла");
         JLabel lab = new JLabel(l.getText());
         final JLabel label1 = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(15);
@@ -97,6 +90,7 @@ public class Form implements Observer {
                 }
             }
         });
+        panelEnc.add(enc);
         panelEnc.add(lab, BorderLayout.NORTH);
         Container c = new Container();
         c.setLayout(new GridLayout(2, 2));
@@ -113,6 +107,7 @@ public class Form implements Observer {
     private void panelDecInit(final JLabel l) {
         panelDec = new JPanel();
         panelDec.setBackground(Color.white);
+        JLabel dec = new JLabel("Расшифровка файла");
         JLabel lab = new JLabel(l.getText());
         final JLabel label1 = new JLabel("Введите пароль");
         final JPasswordField pass1 = new JPasswordField(10);
@@ -142,6 +137,7 @@ public class Form implements Observer {
                 }
             }
         });
+        panelDec.add(dec);
         panelDec.add(lab, BorderLayout.NORTH);
         Container c = new Container();
         c.setLayout(new GridLayout(2, 2));
