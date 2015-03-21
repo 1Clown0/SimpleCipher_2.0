@@ -26,17 +26,6 @@
         </javac>
     </target>
 
-    <!-- Эта задача упаковывает программу в jar-архив -->
-    <target name="dist" depends="compile" description="Create jar-file">
-        <jar jarfile="C:\Project\SimpleCipher 2.0\SimpleCipher.jar" basedir="${buildSrc}"
-             manifest="META-INF/MANIFEST.MF"/>
-    </target>
-
-    <!-- Эта задача запускает программу -->
-    <target name="run" depends="dist" description="Run program">
-        <java jar="${dist}/SimpleCipher.jar" fork="true"/>
-    </target>
-
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
         <junit fork="yes" haltonfailure="yes">
@@ -50,18 +39,28 @@
         </junit>
     </target>
 
+    <!-- Эта задача упаковывает программу в jar-архив -->
+    <target name="dist" depends="test" description="Create jar-file">
+        <jar jarfile="C:\Project\SimpleCipher 2.0\SimpleCipher.jar" basedir="${buildSrc}"
+             manifest="META-INF/MANIFEST.MF"/>
+    </target>
+
+    <!-- Эта задача запускает программу -->
+    <!--<target name="run" depends="dist" description="Run program">
+        <java jar="${dist}/SimpleCipher.jar" fork="true"/>
+    </target>-->
+
     <!-- Эта задача упаковывает файлы с исходными кодами и ресурсами
         в zip-архив -->
-    <target name="packSrc">
+    <!--<target name="packSrc">
         <zip destfile="SimpleCipher_Src.zip">
             <fileset dir="." includes="**/*.java, **/*.mf, **/*.xml"/>
         </zip>
-    </target>
+    </target>-->
 
     <!-- Эта задача удаляет все, кроме исходников -->
-    <target name="clean">
+    <target name="clean" depends="dist">
         <delete dir="build"/>
         <delete dir="${dist}"/>
-        <delete file="SimpleCipher_Src.zip"/>
     </target>
 </project>
