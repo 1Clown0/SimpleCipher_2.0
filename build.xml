@@ -28,6 +28,7 @@
 
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
+        <mkdir dir="TestReports" />
         <junit fork="yes" haltonfailure="yes">
             <classpath>
                 <pathelement location="${buildTest}"/>
@@ -37,6 +38,11 @@
             <formatter type="xml" usefile="true" />
             <test name="com.company.Test.TestCoding"/>
             <test name="com.company.Test.TestForm"/>
+            <batchtest todir="TestReports" fork="yes">
+                <fileset dir="src/com/company/Test">
+                    <include name="*.java" />
+                </fileset>
+            </batchtest>
         </junit>
     </target>
 
