@@ -13,9 +13,7 @@ import java.util.zip.ZipOutputStream;
  * Created by Pavel on 28.02.2015.
  */
 public class Coding {
-    public Coding() {
-
-    }
+    public Coding() {}
 
     public static void encryption(File file) throws IOException{
         byte[] bytes = getBytesFromFile(file);
