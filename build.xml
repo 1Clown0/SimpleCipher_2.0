@@ -29,6 +29,7 @@
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
         <mkdir dir="TestReports" />
+        <junitreport todir="TestReports" />
         <junit fork="yes" haltonfailure="yes">
             <classpath>
                 <pathelement location="${buildTest}"/>
