@@ -28,8 +28,6 @@
 
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
-        <mkdir dir="TestReports" />
-        <junitreport todir="TestReports" />
         <junit fork="yes" haltonfailure="yes">
             <classpath>
                 <pathelement location="${buildTest}"/>
@@ -42,8 +40,19 @@
         </junit>
     </target>
 
+    <target name="run-test-report" depends="test">
+        <mkdir dir="TestReports" />
+        <junitreport todir="TestReports">
+            <fileset dir=".">
+                <include name="*.xml" />
+                <include name="*.txt" />
+            </fileset>
+            <report format="frames" todir="TestReports" />
+        </junitreport>
+    </target>
+
     <!-- Эта задача упаковывает программу в jar-архив -->
-    <target name="dist" depends="test" description="Create jar-file">
+    <target name="dist" depends="run-test-report" description="Create jar-file">
         <jar jarfile="C:\Project\SimpleCipher 2.0\SimpleCipher.jar" basedir="${buildSrc}"
              manifest="META-INF/MANIFEST.MF"/>
     </target>
