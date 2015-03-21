@@ -36,8 +36,12 @@
             </classpath>
             <formatter type="plain" usefile="true"/>
             <formatter type="xml" usefile="true" />
-            <test name="com.company.Test.TestCoding"/>
-            <test name="com.company.Test.TestForm"/>
+            <batchtest fork="yes" todir="TestReports">
+                <fileset dir="${test}">
+                    <include name="*.class" />
+                </fileset>
+                <formatter type="xml" usefile="true" />
+            </batchtest>
         </junit>
     </target>
 
