@@ -33,9 +33,9 @@
     </target>
 
     <!-- Эта задача запускает программу -->
-    <target name="run" depends="dist" description="Run program">
+    <!--<target name="run" depends="dist" description="Run program">
         <java jar="${dist}/SimpleCipher.jar" fork="true"/>
-    </target>
+    </target>-->
 
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
