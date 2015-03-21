@@ -17,35 +17,36 @@ public class Coding {
 
     }
 
-    public static void encryption(File file) throws IOException{
+    public static void encryption(File file, String password) throws IOException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
         byte[] bytes = getBytesFromFile(file);
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i]++;
-        }
+        //for (int i = 0; i < bytes.length; i++) {
+        //    bytes[i]++;
+        //}
 
         byte[] mark = new byte[10];
         for (int i=0;i<mark.length;i++)
             mark[i]=-128;
+        AesCrypt aes = new AesCrypt(password);
         String tmp = createFileName(file.getName(), "encrypted") + "." + "cipher";
         File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
         out.write(mark);
-        out.write(bytes);
+        out.write(aes.encrypt(bytes).orThrow());
         out.close();
     }
-    public static void decryption(File file) throws IOException {
+    public static void decryption(File file, String password) throws IOException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
         byte[] bytes = getBytesFromFile(file);
         byte[] forWrite = new byte[bytes.length-10];
         for (int i = 0; i < forWrite.length; i++) {
-            bytes[i+10]--;
             forWrite[i]=bytes[i+10];
         }
+        AesCrypt aes = new AesCrypt(password);
         String tmp = createFileName(file.getName(), "decrypted") + "." + "txt";
         File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
-        out.write(forWrite);
+        out.write(aes.decrypt(forWrite).orThrow());
         out.close();
     }
 
