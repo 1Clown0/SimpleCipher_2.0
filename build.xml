@@ -35,6 +35,7 @@
             <formatter type="plain" usefile="true"/>
             <formatter type="xml" usefile="true"/>
             <test name="com.company.Test.TestCoding"/>
+            <test name="com.company.Test.TestForm"/>
         </junit>
     </target>
 
