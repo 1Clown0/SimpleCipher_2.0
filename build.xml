@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<project name="SimpleCipher_2.0" basedir="." default="clean">
+<project name="SimpleCipher_2.0" basedir="." default="dist">
     <!--Устанавливаем глобальные свойства для данного проекта-->
     <property name="src" location="src"/>
     <property name="buildSrc" location="build/classes"/>
@@ -28,14 +28,14 @@
 
     <!-- Эта задача упаковывает программу в jar-архив -->
     <target name="dist" depends="compile" description="Create jar-file">
-        <jar jarfile="${dist}/SimpleCipher.jar" basedir="${buildSrc}"
+        <jar jarfile="C:\Project\SimpleCipher 2.0\SimpleCipher.jar" basedir="${buildSrc}"
              manifest="META-INF/MANIFEST.MF"/>
     </target>
 
     <!-- Эта задача запускает программу -->
-    <!--<target name="run" depends="dist" description="Run program">
+    <target name="run" depends="dist" description="Run program">
         <java jar="${dist}/SimpleCipher.jar" fork="true"/>
-    </target>-->
+    </target>
 
     <!-- Эта задача выполняет тестирование проекта -->
     <target name="test" depends="compile">
