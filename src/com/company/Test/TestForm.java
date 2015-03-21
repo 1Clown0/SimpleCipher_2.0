@@ -22,19 +22,19 @@ public class TestForm extends TestCase {
     @Test
     public void testEqualsPass() throws Exception {
         Form form = new Form();
-        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
+        assertTrue(!form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'a', 'b', 'c'}) == true);
     }
 
     @Test
     public void testNotEqualsPass() throws Exception {
         Form form = new Form();
-        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'y', 'z'}) == false);
+        assertTrue(!form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'y', 'z'}) == false);
     }
 
     @Test
     public void testNotEqualsPassFirstItem() throws Exception {
         Form form = new Form();
-        assertTrue(form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'b', 'c'}) == false);
+        assertTrue(!form.equalsPass(new char[]{'a', 'b', 'c'}, new char[]{'x', 'b', 'c'}) == false);
     }
 
     @Test

@@ -25,20 +25,20 @@ public class TestCoding extends TestCase {
     public void testOkCheckName() throws Exception {
         Coding coding = new Coding();
         File newFile = new File("test.cipher");
-        assertTrue(coding.checkName(newFile) == true);
+        assertTrue(!coding.checkName(newFile) == true);
     }
 
     @Test
     public void testFailCheckName() throws Exception {
         Coding coding = new Coding();
         File newFile = new File("test.txt");
-        assertTrue(coding.checkName(newFile) == false);
+        assertTrue(!coding.checkName(newFile) == false);
     }
 
     @Test
     public void testCreateFileFullName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted)") == true);
+        assertTrue(!coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted)") == true);
     }
 
     @Test
