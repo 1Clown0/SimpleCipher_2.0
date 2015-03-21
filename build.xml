@@ -33,13 +33,9 @@
                 <pathelement location="${buildTest}"/>
                 <pathelement location="${buildSrc}"/>
             </classpath>
-            <formatter type="xml" usefile="true" />
-            <batchtest todir="src/com/company/Test" fork="yes">
-                <fileset dir="src/com/company/Test">
-                    <include name="*.java" />
-                </fileset>
-            </batchtest>
-
+            <formatter type="plain" usefile="true"/>
+            <test name="com.company.Test.TestCoding"/>
+            <test name="com.company.Test.TestForm"/>
         </junit>
     </target>
 
