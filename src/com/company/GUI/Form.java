@@ -27,7 +27,7 @@ public class Form implements Observer {
     public Form() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(600, 200);
         frame.setLocation(100, 100);
         frame.setVisible(true);
         //JLabel label = new JLabel("Drop stuff here", JLabel.CENTER);
@@ -72,11 +72,12 @@ public class Form implements Observer {
         final JPasswordField pass1 = new JPasswordField(15);
         final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(15);
+        final JLabel labelError = new JLabel("");
         JButton back = new JButton("Назад");
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                l.setText("Drop stuff here");
+                l.setText("Перетащите файл в окно");
                 frame.remove(panelEnc);
                 frame.add(panelStart);
                 frame.repaint();
@@ -88,15 +89,28 @@ public class Form implements Observer {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
 
-                    label1.setText("Good");
                     try {
-                        Coding.encryption(file);
+                        if(!Coding.encryption(file,new String(pass1.getPassword())))
+                            labelError.setText("Что-то пошло не так");
+                        else
+                            labelError.setText("Файл успешно зашифрован");
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+        panelDec.add(labelError);
         panelEnc.add(lab, BorderLayout.NORTH);
         Container c = new Container();
         c.setLayout(new GridLayout(2, 2));
@@ -118,6 +132,7 @@ public class Form implements Observer {
         final JPasswordField pass1 = new JPasswordField(10);
         final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(10);
+        final JLabel labelError = new JLabel("");
         JButton back = new JButton("Назад");
         back.addActionListener(new ActionListener() {
             @Override
@@ -133,15 +148,31 @@ public class Form implements Observer {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
-                    label1.setText("Good");
                     try {
-                        Coding.decryption(file);
+                        if (!Coding.decryption(file,new String(pass1.getPassword())))
+                        {
+                            labelError.setText("Не удалось расшифровать файл, не верный пароль");
+                        }
+                        else
+                            labelError.setText("Файл успешно расшифрован");
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        labelError.setText("Не удалось расшифровать файл, не верный пароль");
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+
+        panelDec.add(labelError);
         panelDec.add(lab, BorderLayout.NORTH);
         Container c = new Container();
         c.setLayout(new GridLayout(2, 2));
