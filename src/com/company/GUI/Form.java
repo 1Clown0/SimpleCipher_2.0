@@ -110,7 +110,7 @@ public class Form implements Observer {
                 }
             }
         });
-        panelDec.add(labelError);
+        panelEnc.add(labelError);
         panelEnc.add(lab, BorderLayout.NORTH);
         Container c = new Container();
         c.setLayout(new GridLayout(2, 2));
@@ -213,6 +213,7 @@ public class Form implements Observer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("asdasdad");
         }
     }
 }
