@@ -47,10 +47,10 @@ public class DragAndDrop extends TransferHandler {
                 for (File file : files)
                     sb.append("<li>" + file);
                 if (files.size()>1)
-                    label.setText("<html> Too mane files");
+                    label.setText("<html> Слишком много файлов");
                 else {
                     label.setText("<html>" + files.size() +
-                            " files dropped<br>" + sb);
+                            " файл перемещён<br>" + sb);
 
                     if (files.get(0).isFile()) {
                         Form.file = files.get(0);

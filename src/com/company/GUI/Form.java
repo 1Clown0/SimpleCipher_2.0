@@ -57,7 +57,7 @@ public class Form implements Observer {
         panelStart.setBackground(Color.white);
         LabelObserver l = new LabelObserver();
         l.addObserver(this);
-        final JLabel label = new JLabel("Drop stuff here");
+        final JLabel label = new JLabel("Перетащите файл в окно");
         panelStart.add(label);
         panelStart.setTransferHandler(new DragAndDrop(label, l));
         panelStart.add(label);
@@ -72,7 +72,7 @@ public class Form implements Observer {
         final JPasswordField pass1 = new JPasswordField(15);
         final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(15);
-        final JLabel labelError = new JLabel("");
+        final JLabel labelError = new JLabel("ШИФРОВАНИЕ");
         JButton back = new JButton("Назад");
         back.addActionListener(new ActionListener() {
             @Override
@@ -132,12 +132,12 @@ public class Form implements Observer {
         final JPasswordField pass1 = new JPasswordField(10);
         final JLabel label2 = new JLabel("Подтвердите пароль");
         final JPasswordField pass2 = new JPasswordField(10);
-        final JLabel labelError = new JLabel("");
+        final JLabel labelError = new JLabel("РАСШИФРОВКА");
         JButton back = new JButton("Назад");
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                l.setText("Drop stuff here");
+                l.setText("Перетащите файл в окно");
                 frame.remove(panelDec);
                 frame.add(panelStart);
                 frame.repaint();
@@ -197,7 +197,7 @@ public class Form implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (((LabelObserver) o).getLabel().getText() != "Drop stuff here") {
+        if (((LabelObserver) o).getLabel().getText() != "Перетащите файл в окно") {
             try {
                 if (!Coding.checkFile(file)) {
                     panelEncInit(((LabelObserver) o).getLabel());
@@ -213,7 +213,6 @@ public class Form implements Observer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("asdasdad");
         }
     }
 }

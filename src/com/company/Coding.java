@@ -24,10 +24,10 @@ public class Coding {
         File newFile = new File(file.getParent(),tmp);
         newFile.createNewFile();
         FileOutputStream out = new FileOutputStream(newFile);
-        out.write(mark);
         AesCrypt aes = new AesCrypt(password);
         byte[] temp;
         temp = aes.encrypt(bytes).orThrow();
+        out.write(mark);
         out.write(temp);
         out.close();
         return true;
@@ -138,7 +138,10 @@ public class Coding {
             return false;
         for (int i=0;i<10;i++)
             if (bytes[i]!=-128)
+            {
                 flag = false;
+                break;
+            }
         return flag;
 
     }
