@@ -1,15 +1,11 @@
 package com.company;
 
-import javafx.scene.shape.Arc;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Created by Pavel on 28.02.2015.
@@ -18,7 +14,7 @@ public class Coding {
     public Coding() {}
 
     public static boolean encryption(File file, String password) throws IOException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
-        File zipFile = Archiving.makeZip(file);
+        File zipFile = Archiv.makeZip(file);
         byte[] bytes = getBytesFromFile(zipFile);
         zipFile.delete();
         byte[] mark = new byte[10];
@@ -52,7 +48,7 @@ public class Coding {
         try {
             byte[] temp = aes.decrypt(forWrite).orThrow();
             out.write(temp);
-            File newFile = Archiving.makeFile(zipFile);
+            File newFile = Archiv.makeFile(zipFile);
             System.out.println(newFile.getPath());
 
         }
