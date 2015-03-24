@@ -5,6 +5,7 @@ import java.util.Observable;
 
 /**
  * Created by Pavel on 15.03.2015.
+ * Наблюдатель, необходимый для наблюдения за изменением содержимого лэйбла
  */
 public class LabelObserver extends Observable {
     JLabel label  = new JLabel();

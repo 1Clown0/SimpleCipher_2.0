@@ -22,9 +22,14 @@ import com.company.Coding;
 
 /**
  * Created by Pavel on 28.02.2015.
+ * @author Pavel
+ * <p> Класс Form отвечает за создание рабочего окна с несколькими панелями</p>
  */
 public class Form implements Observer {
     public Form() {
+        /**
+         * <p> Конструктор.</p>
+         */
         frame = new JFrame();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setSize(600, 200);
@@ -40,14 +45,16 @@ public class Form implements Observer {
         frame.validate();
     }
 
-    public static File file;
-    //private File file1;
+    public static File file; /** {@value}  file хранит объект типа File, то есть файл, с которым работаем */
     private JFrame frame;
     private JPanel panelEnc;
     private JPanel panelDec;
     private JPanel panelStart;
 
-    private void panelStartInit() {
+    /**
+     *  <p>Инициализация стартовой панели </p>
+     */
+    private void panelStartInit() { /**Инициализация стартовой панели */
         file = new File("newFile");
         panelStart = new JPanel();
         //JLabel background=new JLabel(new ImageIcon(Form.class.getResource("w2qV7qCs7eo.jpg")));
@@ -59,12 +66,15 @@ public class Form implements Observer {
         l.addObserver(this);
         final JLabel label = new JLabel("Перетащите файл в окно");
         panelStart.add(label);
-        panelStart.setTransferHandler(new DragAndDrop(label, l));
+        panelStart.setTransferHandler(new DragAndDrop(label, l)); /** Панель принимает файлы */
         panelStart.add(label);
     }
 
-
-    private void panelEncInit(final JLabel l) {
+    /**
+     *
+     * @param l Лэйбл содержит название расшифруемого файла
+     */
+    private void panelEncInit(final JLabel l) { /** Инициализация панели шифрования */
         panelEnc = new JPanel();
         panelEnc.setBackground(Color.white);
         JLabel lab = new JLabel(l.getText());
@@ -83,7 +93,7 @@ public class Form implements Observer {
                 frame.repaint();
             }
         });
-        JButton start = new JButton("Пуск");
+        JButton start = new JButton("Пуск"); /** Вызывает методы для шифрования файла */
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -124,7 +134,11 @@ public class Form implements Observer {
         panelEnc.add(back, BorderLayout.SOUTH);
     }
 
-    private void panelDecInit(final JLabel l) {
+    /**
+     *
+     * @param l Лэйбл содержит название расшифруемого файла
+     */
+    private void panelDecInit(final JLabel l) { /** Инициализация панели расшифрования */
         panelDec = new JPanel();
         panelDec.setBackground(Color.white);
         JLabel lab = new JLabel(l.getText());
@@ -134,7 +148,7 @@ public class Form implements Observer {
         final JPasswordField pass2 = new JPasswordField(10);
         final JLabel labelError = new JLabel("РАСШИФРОВКА");
         JButton back = new JButton("Назад");
-        back.addActionListener(new ActionListener() {
+        back.addActionListener(new ActionListener() { /** Возвращение на стартовую панель */
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 l.setText("Перетащите файл в окно");
@@ -143,7 +157,7 @@ public class Form implements Observer {
                 frame.repaint();
             }
         });
-        JButton start = new JButton("Пуск");
+        JButton start = new JButton("Пуск"); /** Вызывает методы для расшифрования файла */
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -186,15 +200,30 @@ public class Form implements Observer {
         panelDec.add(back, BorderLayout.SOUTH);
     }
 
+    /**
+     *
+     * <p> Проверка на совпадение паролей с разных полей</p>
+     * @param ch1 Пароль с первого поля для паролей
+     * @param ch2 Пароль со второго поля для паролей
+     * @return true если пароли совпадают и false иначе
+     */
     public boolean equalsPass(char[] ch1, char[] ch2) {
         if (ch1.length != ch2.length)
             return false;
         for (int i = 0; i < ch1.length; i++)
             if (ch1[i] != ch2[i])
                 return false;
+
         return true;
     }
 
+    /**
+     * <p> Обыкновенный Observer, то бишь наблюдение за изменением содержимого панели.
+     * То есть вызивается при перетаскивании файла в стартовую панель и название файла переносится в лэйбл</p>
+     * @param o Наблюдатель
+     * @param arg хрен знает что
+     *
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (((LabelObserver) o).getLabel().getText() != "Перетащите файл в окно") {

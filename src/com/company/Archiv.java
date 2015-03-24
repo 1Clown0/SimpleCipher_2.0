@@ -10,11 +10,26 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * Created by Pavel on 23.03.2015.
+ * <p>Набор инструментов для извлечения фалов из архива и добавлени в него.</p>
  */
+
 public class Archiv {
+    /**
+     *
+     * @param file Входной файл который необходимо зашифровать
+     * @return Возвращает объект типа File который ссылается на котовый архив
+     * @throws IOException
+     */
     public static File makeZip(File file) throws IOException {
         return add(file.getParent()+"\\tempZip.zip",file.getPath());
     }
+
+    /**
+     *
+     * @param file Входной архив который нужно распаковать
+     * @return распакованный файл
+     * @throws IOException
+     */
     public static File makeFile(File file) throws IOException {
         return unpack(file.getPath(),file.getParent());
     }

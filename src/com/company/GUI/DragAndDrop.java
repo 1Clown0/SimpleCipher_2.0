@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Created by Pavel on 07.03.2015.
+ *  <p> Класс наследуется от TransferHandler и несколько расширяет его добавляя наблюдатель
+ *  и возможность сохранять перемещённый файл</p>
  */
 public class DragAndDrop extends TransferHandler {
 

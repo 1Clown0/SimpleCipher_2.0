@@ -8,6 +8,9 @@ import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+/**
+ * <p> Набор инструментов для шифрования файла</p>
+ */
 public class AesCrypt {
 
     byte [] seed;
