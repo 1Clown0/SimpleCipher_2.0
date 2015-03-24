@@ -36,51 +36,99 @@ public class TestCoding extends TestCase {
     }
 
     @Test
-    public void testCreateFileFullName() throws Exception {
+    public void testCreateDecryptedFileFullName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted)") == true);
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).txt") == true);
     }
 
     @Test
-    public void testNotCreateFileFullName() throws Exception {
+    public void testCreateEncryptedFileFullName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("test(encrypted).cipher") == true);
+    }
+
+    @Test
+    public void testNotCreateDecryptedFileFullName() throws Exception {
         Coding coding = new Coding();
         assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("") == false);
     }
 
     @Test
-    public void testNotCreateFileName() throws Exception {
+    public void testNotCreateEncryptedFileFullName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("(decrypted)") == false);
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("") == false);
     }
 
     @Test
-    public void testNotCreateFileMode() throws Exception {
+    public void testNotCreateDecryptedFileName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test()") == false);
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("(decrypted).txt") == false);
     }
 
     @Test
-    public void testCreateFileExtension() throws Exception {
+    public void testNotCreateEncryptedFileName() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).txt") == false);
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("(encrypted).cipher") == false);
     }
 
     @Test
-    public void testCreateInvalidFileName() throws Exception {
+    public void testNotCreateDecryptedFileMode() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("xxx(decrypted)") == false);
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test().txt") == false);
     }
 
     @Test
-    public void testCreateInvalidFileMode() throws Exception {
+    public void testNotCreateEncryptedFileMode() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(xxx)") == false);
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("test().cipher") == false);
     }
 
     @Test
-    public void testCreateFileFullNameWithDot() throws Exception {
+    public void testNotCreateDecryptedFileExtension() throws Exception {
         Coding coding = new Coding();
-        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).") == false);
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted)") == false);
+    }
+
+    @Test
+    public void testNotCreateEncryptedFileExtension() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("test(encrypted)") == false);
+    }
+
+    @Test
+    public void testCreateInvalidDecryptedFileName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("xxx(decrypted).txt") == false);
+    }
+
+    @Test
+    public void testCreateInvalidEncryptedFileName() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("xxx(encrypted).cipher") == false);
+    }
+
+    @Test
+    public void testCreateInvalidDecryptedFileMode() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(xxx).txt") == false);
+    }
+
+    @Test
+    public void testCreateInvalidEncryptedFileMode() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("test(xxx).cipher") == false);
+    }
+
+    @Test
+    public void testCreateInvalidDecryptedFileExtension() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "decrypted").equalsIgnoreCase("test(decrypted).xxx") == false);
+    }
+
+    @Test
+    public void testCreateInvalidEncryptedFileExtension() throws Exception {
+        Coding coding = new Coding();
+        assertTrue(coding.createFileName("test.txt", "encrypted").equalsIgnoreCase("test(encrypted).xxx") == false);
     }
 
     @Test
