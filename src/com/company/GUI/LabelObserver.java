@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.util.Observable;
 
 /**
- * Created by Pavel on 15.03.2015.
  * Наблюдатель, необходимый для наблюдения за изменением содержимого лэйбла
+ * Created by Pavel on 15.03.2015.
  */
 public class LabelObserver extends Observable {
     JLabel label  = new JLabel();

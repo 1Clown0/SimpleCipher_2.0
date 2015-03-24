@@ -21,16 +21,20 @@ import com.company.Coding;
 
 
 /**
+ * <p> Класс Form отвечает за создание рабочего окна с несколькими панелями panelStart, panelEnc, panelDec.
+ * Внутри этого класса происходит вызов всех остальных функций программы.</p>
  * Created by Pavel on 28.02.2015.
  * @author Pavel
- * <p> Класс Form отвечает за создание рабочего окна с несколькими панелями</p>
+ *
  */
 public class Form implements Observer {
     public Form() {
         /**
-         * <p> Конструктор.</p>
+         * <p> Конструктор фрейма, здесь создаётся окно размером 600 на 200 пикселей.
+         * и инициализируется стартовая панель</p>
          */
         frame = new JFrame();
+        frame.setTitle("SimpleCipher 2.0");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setSize(600, 200);
         frame.setLocation(100, 100);
@@ -46,9 +50,21 @@ public class Form implements Observer {
     }
 
     public static File file; /** {@value}  file хранит объект типа File, то есть файл, с которым работаем */
+    /**
+     * Основной фрейм в котором происходит переключение панелей
+     */
     private JFrame frame;
+    /**
+     * Панель шифрования
+     */
     private JPanel panelEnc;
+    /**
+     * Панель расшифровки
+     */
     private JPanel panelDec;
+    /**
+     * Стартовая панель
+     */
     private JPanel panelStart;
 
     /**
@@ -57,21 +73,17 @@ public class Form implements Observer {
     private void panelStartInit() { /**Инициализация стартовой панели */
         file = new File("newFile");
         panelStart = new JPanel();
-        //JLabel background=new JLabel(new ImageIcon(Form.class.getResource("w2qV7qCs7eo.jpg")));
-        //panelStart.add(background);
-        //background.setLayout(new FlowLayout());
-
         panelStart.setBackground(Color.white);
         LabelObserver l = new LabelObserver();
         l.addObserver(this);
         final JLabel label = new JLabel("Перетащите файл в окно");
-        panelStart.add(label);
+        panelStart.add(label, BorderLayout.CENTER);
         panelStart.setTransferHandler(new DragAndDrop(label, l)); /** Панель принимает файлы */
         panelStart.add(label);
     }
 
     /**
-     *
+     *<p> Инициализация панели шифрования</p>
      * @param l Лэйбл содержит название расшифруемого файла
      */
     private void panelEncInit(final JLabel l) { /** Инициализация панели шифрования */
@@ -97,26 +109,23 @@ public class Form implements Observer {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
-
-                    try {
-                        if(!Coding.encryption(file,new String(pass1.getPassword())))
-                            labelError.setText("Что-то пошло не так");
-                        else
-                            labelError.setText("Файл успешно зашифрован");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (IllegalBlockSizeException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchPaddingException e) {
-                        e.printStackTrace();
-                    } catch (BadPaddingException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (InvalidKeyException e) {
-                        e.printStackTrace();
-                    }
+                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) try {
+                    if (!Coding.encryption(file, new String(pass1.getPassword())))
+                        labelError.setText("Что-то пошло не так");
+                    else
+                        labelError.setText("Файл успешно зашифрован");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -135,7 +144,7 @@ public class Form implements Observer {
     }
 
     /**
-     *
+     *<p> Инициализация панели расшифровки</p>
      * @param l Лэйбл содержит название расшифруемого файла
      */
     private void panelDecInit(final JLabel l) { /** Инициализация панели расшифрования */

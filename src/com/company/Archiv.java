@@ -33,7 +33,7 @@ public class Archiv {
     public static File makeFile(File file) throws IOException {
         return unpack(file.getPath(),file.getParent());
     }
-    static public File add(String zipFileName, String fileName) throws IOException {
+    static private File add(String zipFileName, String fileName) throws IOException {
         File zipFile = new File(zipFileName);
         zipFile.createNewFile();
         File tmpFile = File.createTempFile("zip", "tmp");
@@ -110,7 +110,7 @@ public class Archiv {
         tmpFile.delete();
         return zipFile;
     }
-    public static File unpack(String path, String dir_to) throws IOException {
+    private static File unpack(String path, String dir_to) throws IOException {
 
         ZipFile zip = new ZipFile(path);
         Enumeration entries = zip.entries();
