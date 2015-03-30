@@ -109,24 +109,28 @@ public class Form implements Observer {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) try {
-                    if (!Coding.encryption(file, new String(pass1.getPassword())))
-                        labelError.setText("Что-то пошло не так");
-                    else
-                        labelError.setText("Файл успешно зашифрован");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (IllegalBlockSizeException e) {
-                    e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                } catch (BadPaddingException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
+                if (Arrays.equals(pass1.getPassword(), pass2.getPassword())) {
+                    try {
+                        if (!Coding.encryption(file, new String(pass1.getPassword())))
+                            labelError.setText("Что-то пошло не так");
+                        else
+                            labelError.setText("Файл успешно зашифрован");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchPaddingException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    }
                 }
+                else
+                    labelError.setText("Введённые пароли не совпадают");
             }
         });
         panelEnc.add(labelError);
@@ -191,7 +195,10 @@ public class Form implements Observer {
                     } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
+
                 }
+                else
+                    labelError.setText("Введённые пароли не совпадают");
             }
         });
 
